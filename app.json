@@ -1,1 +1,24 @@
-{"expo":{"name":"Field Registry","slug":"farm-registry-mobile","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","splash":{"resizeMode":"contain","backgroundColor":"#f5f8f6"},"ios":{"supportsTablet":true},"android":{"adaptiveIcon":{"backgroundColor":"#0b6f5c"}}}}
+{
+  "expo": {
+    "name": "Field Registry",
+    "slug": "farm-registry-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#f5f8f6"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0b6f5c"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}

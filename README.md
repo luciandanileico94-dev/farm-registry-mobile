@@ -11,6 +11,18 @@ npx expo start
 
 Deschide aplicația în Expo Go sau într-un simulator Android/iOS.
 
+## Preview web
+
+Exportul web folosește calea oficială Expo pentru SDK 57:
+
+```bash
+npm run export:web
+```
+
+Artefactul static este generat în `dist/`. Workflow-ul [`deploy-pages.yml`](./.github/workflows/deploy-pages.yml) îl publică în GitHub Pages după activarea Pages pentru repository și rularea workflow-ului.
+
+Live preview: nu este încă publicat. Nu există un URL live verificabil înainte de primul deployment; URL-ul generat de GitHub Pages va fi afișat în sumarul workflow-ului.
+
 ## Verificare
 
 ```bash

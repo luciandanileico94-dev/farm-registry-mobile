@@ -15,10 +15,10 @@ Deschide aplicația în Expo Go sau într-un simulator Android/iOS.
 
 ```bash
 npm run typecheck
-npm test
+npm test -- --runInBand
 ```
 
-CI rulează aceleași verificări după `npm ci`.
+Testele folosesc Jest cu presetul oficial `jest-expo` și React Native Testing Library (RNTL). Verificările de geometrie și reducer sunt în [`__tests__/geometry.test.ts`](./__tests__/geometry.test.ts) și [`__tests__/taskState.test.ts`](./__tests__/taskState.test.ts), iar comportamentul UI este verificat în [`__tests__/App.test.tsx`](./__tests__/App.test.tsx). CI rulează aceleași verificări după `npm ci`.
 
 ## Ce funcționează în demo
 

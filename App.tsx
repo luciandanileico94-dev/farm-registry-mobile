@@ -13,6 +13,8 @@ const parcels = [
 
 const formatTime = (value: string) => new Intl.DateTimeFormat('ro-RO', { hour: '2-digit', minute: '2-digit' }).format(new Date(value));
 
+export const formatSyncNotice = (count: number) => `${count} ${count === 1 ? 'validare a fost mutată' : 'validări au fost mutate'} în istoricul local al demo-ului.`;
+
 export default function App() {
   const [search, setSearch] = useState('');
   const [offline, setOffline] = useState(false);
@@ -51,7 +53,7 @@ export default function App() {
     if (offline || store.queue.length === 0) return;
     const flushed = flushValidationQueue(store.queue, new Date().toISOString());
     setStore((current) => ({ queue: flushed.queue, history: [...current.history, ...flushed.history] }));
-    setNotice(`${flushed.history.length} validări au fost mutate în istoricul local al demo-ului.`);
+    setNotice(formatSyncNotice(flushed.history.length));
   };
 
   const resetDemo = () => { setStore(emptyDemoStore); setNotice('Datele locale ale demo-ului au fost șterse.'); };

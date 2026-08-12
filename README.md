@@ -23,6 +23,13 @@ Artefactul static este generat în `dist/`. Workflow-ul [`deploy-pages.yml`](./.
 
 Live preview: nu este încă publicat. Nu există un URL live verificabil înainte de primul deployment; URL-ul generat de GitHub Pages va fi afișat în sumarul workflow-ului.
 
+## Capturi reale
+
+Acestea sunt capturi reale ale unui render Expo web al aceleiași interfețe React Native:
+
+- [Desktop](./docs/screenshots/field-registry-desktop.png)
+- [Mobil](./docs/screenshots/field-registry-mobile.png)
+
 ## Verificare
 
 ```bash

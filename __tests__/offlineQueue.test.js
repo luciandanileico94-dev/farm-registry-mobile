@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { enqueueValidation, flushValidationQueue } = require('/tmp/farm-mobile-offline-queue-test/offlineQueue.js');
 const fs = require('node:fs');
+const path = require('node:path');
 
 const action = { id: 'a1', parcelId: 'MD-CT-00142', parcelName: 'AgroNord SRL', createdAt: '2026-08-12T10:00:00.000Z' };
 
@@ -19,7 +20,7 @@ test('flush moves every queued validation into local history', () => {
 });
 
 test('sync notice uses Romanian singular and plural grammar', () => {
-  const appSource = fs.readFileSync('/work/repo/App.tsx', 'utf8');
+  const appSource = fs.readFileSync(path.join(__dirname, '..', 'App.tsx'), 'utf8');
   assert.match(appSource, /count === 1 \? 'validare a fost mutată' : 'validări au fost mutate'/);
   assert.match(appSource, /setNotice\(formatSyncNotice\(flushed\.history\.length\)\)/);
 });

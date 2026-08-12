@@ -1,8 +1,14 @@
-# Farm Registry Mobile
+# Farm Registry Mobile — teren, sarcini și observații offline
 
-Aplicație Expo / React Native **Romanian-first**, mobile-first, pentru demonstrarea unui registru agricol sintetic care rămâne utilizabil offline. Interfața publică este un flux local, bazat pe fixtures fictive — nu un registru de producție.
+Aplicație mobilă pentru operatori de teren: verificarea parcelelor, sarcini, observații și lucru fără conexiune. Interfața este construită în Expo / React Native, Romanian-first și mobile-first, cu un flux local complet pentru lucru, coadă offline și istoric.
 
 [Deschide demo-ul Expo Web →](https://farm-registry-mobile.vercel.app)
+
+![Previzualizare Farm Registry Mobile](docs/screenshots/mobile-preview.png)
+
+## Flux de lucru
+
+Operatorul caută o parcelă, deschide fișa, adaugă o observație sau creează o sarcină, apoi urmărește starea în outbox și în auditul local. Filtrele pentru azi, acțiune și sincronizare reduc lista la lucrările care cer atenție.
 
 ## Ce include
 

@@ -14,13 +14,11 @@ Utilizator
     v
 App.tsx / workspace React local
     |
-    +--> fixtures.ts (ferme, parcele și sarcini sintetice)
+    +--> fixtures.ts + workspaceLogic.ts
+    |    (date sintetice; filtrare, validare, serializare)
     |
-    +--> workspaceLogic.ts (filtrare, validare, serializare)
-    |
-    +--> AsyncStorage (încărcare și persistență locală în App.tsx)
-    |        |
-    |        +--> offlineQueue.ts (outbox idempotent, flush local, eșec/retry)
+    +--> AsyncStorage + offlineQueue.ts
+    |    (persistență locală; outbox idempotent, flush local, eșec/retry)
     |        |
     |        +--> audit local în MobileStore
     |
@@ -51,7 +49,7 @@ La inițializare, `cloneInitialStore` pornește de la `fixtureTasks` și colecț
 
 ### Persistență locală
 
-Persistența este implementată direct în [`App.tsx`](../App.tsx), nu într-un fișier `src/persistence.ts` în starea curentă a depozitului. `AsyncStorage.getItem(STORAGE_KEY)` restaurează store-ul, iar `AsyncStorage.setItem(STORAGE_KEY, serializeMobileStore(store))` persistă sarcinile, observațiile, outbox-ul și auditul pe dispozitiv.
+Persistența este implementată direct în [`App.tsx`](../App.tsx), nu într-un fișier `src/persistence.ts` în starea curentă a depozitului. `AsyncStorage.getItem(STORAGE_KEY)` restaurează store-ul, iar `AsyncStorage.setItem(STORAGE_KEY, serializeMobileStore(store))` persistă sarcinile, observațiile, outbox-ul și auditul pe dispozitiv. `MobileStore` este definit în [`src/fixtures.ts`](../src/fixtures.ts).
 
 Aceasta este persistență locală a clientului. Nu dovedește persistență într-un backend, replicare între dispozitive, livrare către server sau garanții de producție.
 

@@ -35,6 +35,11 @@ Nu există integrări reale, sincronizare pe server sau afirmație de pregătire
 - React Native Web / React DOM pentru preview-ul web
 - `@react-native-async-storage/async-storage` pentru starea locală
 
+## Dovezi
+
+- [Arhitectura demonstrației mobile](docs/architecture.md)
+- [Matrice de dovezi verificabile](docs/evidence-matrix.md)
+
 ## Rulare locală și export
 
 ```bash

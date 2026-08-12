@@ -1,6 +1,12 @@
 # Farm Registry Mobile
 
-React Native / Expo demo pentru un flux de teren al operatorului. Toate parcelele, numele, coordonatele și evenimentele sunt sintetice și locale: nu există GPS real, date cadastrale, backend, API guvernamental sau sincronizare cu un server.
+Clientul mobil Expo/React Native pentru fluxul offline al operatorului din Farm Registry. Interfața este în primul rând în română și folosește numai date locale, deterministe și sintetice: 12 parcele în 6 ferme fictive, sarcini, observații și audit local.
+
+## Important: ce este și ce nu este
+
+Acesta este **Farm Registry Mobile**, clientul mobil al spațiului Farm Registry. Nu este `field-mobile-demo`, proiectul separat pentru showcase generic de teren. Cele două pot ilustra concepte apropiate, dar nu împart date, backend sau promisiuni de integrare.
+
+Aplicația de aici nu publică date personale, coordonate reale, ID-uri cadastrale, credențiale sau endpoint-uri de producție. Numele fermelor, ID-urile `FR-SYN-*`, suprafețele, sarcinile și metadatele foto sunt inventate pentru demonstrație.
 
 ## Pornire
 
@@ -9,27 +15,35 @@ npm ci
 npx expo start
 ```
 
-Deschideți proiectul în Expo Go sau într-un simulator Android/iOS. `npm run typecheck` verifică TypeScript, iar `npm test` verifică operațiile cozii.
+Pentru verificări locale:
 
-## Flux offline local
+```bash
+npm run typecheck
+npm test
+npm run export:web
+```
 
-- Selectați o parcelă sintetică și apăsați „Marchează validarea local”.
-- În modul Offline, validarea este păstrată persistent în AsyncStorage și apare ca „în așteptarea sincronizării”. Schimbarea modului este observabilă: butonul de sincronizare este dezactivat offline.
-- În modul Online, apăsați explicit „Sincronizează demo”. Aceasta mută coada doar în istoricul local sintetic; nu trimite nimic pe internet și nu pretinde sincronizare cu un server.
-- Coada și istoricul supraviețuiesc reîncărcării. „Resetează demo-ul local” le golește.
+## Fluxul aplicației
 
-Centroidul afișat este o valoare fixă, sintetică, folosită pentru a ilustra forma datelor. Demo-ul nu validează cadastru și nu furnizează poziționare.
+- Panoul arată sarcinile alocate, termenele de azi, acțiunile din outbox și sarcinile finalizate.
+- Lista de lucru poate fi căutată după fermă, parcelă sau cultură și filtrată după azi, necesită acțiune sau sincronizare.
+- Fișa parcelei include cultură, suprafață, status, operator, sarcini, observații și audit local.
+- O observație cere o notă de cel puțin 10 caractere și o condiție/status. Metadatele foto opționale sunt un fixture sintetic; aplicația nu solicită camera.
+- Sarcinile existente trec prin stări de lucru (`de început`, `în lucru`, `finalizat`). O sarcină nouă pornește ca `Schiță`, apoi poate fi trimisă în outbox.
+- Fiecare observație sau schimbare de sarcină primește un `client_action_id` idempotent. Outbox-ul are stările `pending`, `synced` și `failed`, permite retry și poate simula explicit un eșec.
+- Modul online/offline este controlat manual. Sincronizarea este un flush local demonstrativ; în modul offline butonul este dezactivat.
+- AsyncStorage persistă store-ul local la reîncărcare. „Resetează demo-ul local” restaurează fixtures și golește observațiile, auditul și outbox-ul.
 
-## Limitare Vercel / Expo Web
+## Relația Web / Python
 
-`npm run export:web` exportă varianta web Expo pentru previzualizare. Vercel poate servi fișierele exportate, dar acest export nu transformă demo-ul într-o aplicație mobilă, nu adaugă GPS real și nu creează backend sau sincronizare. Pentru Vercel este necesară configurarea unui build static care publică directorul `dist` după export.
+Interfața este construită în React Native + Expo și poate fi previzualizată pe Android, iOS sau Expo Web. `npm run export:web` exportă o variantă statică pentru previzualizare; aceasta nu transformă proiectul într-un backend și nu adaugă capabilități native.
 
-## Ce demonstrează
+`src/apiClient.ts` definește granița pentru viitorul serviciu FastAPI: `GET /fields`, `GET /tasks` și `POST /observations`. Clientul API este creat doar când este setată explicit variabila `EXPO_PUBLIC_FARM_REGISTRY_API_URL`; showcase-ul implicit rămâne în modul fixtures/local și nu conține un URL inventat sau implementat în producție. Backend-ul Python nu face parte din acest repository și nu este pornit de aplicație.
 
-- React Native și TypeScript;
-- interfață mobile-first pentru operatori;
-- coadă offline persistentă și flush local explicit;
-- feedback vizibil pentru starea și istoricul demo;
-- testare a cozii și export Expo Web.
+## Limite sintetice
 
-Aceasta este o demonstrație locală, nu o integrare cu un API de stat.
+Acest workspace nu validează cadastru, nu citește GPS, nu deschide camera, nu face geofencing, nu verifică identitatea fermierilor și nu sincronizează cu registre guvernamentale. „Online” în demo înseamnă doar că operatorul a permis flush-ul local; fără serviciu FastAPI configurat, nicio acțiune nu părăsește dispozitivul.
+
+## Teste
+
+Testele Node acoperă păstrarea cozii existente, deduplicarea prin `client_action_id`, retry după eșec, filtrarea listei, validarea observației și serializarea pentru persistență. Typecheck-ul verifică aplicația Expo și modulele TypeScript.

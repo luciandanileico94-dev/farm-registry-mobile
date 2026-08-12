@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "typecheck": "tsc --noEmit",
-    "test": "tsc src/offlineQueue.ts --outDir /tmp/farm-mobile-offline-queue-test --module commonjs --target es2020 --skipLibCheck && node --test __tests__/offlineQueue.test.js",
+    "test": "tsc src/offlineQueue.ts src/fixtures.ts src/workspaceLogic.ts --outDir /tmp/farm-mobile-offline-queue-test --module commonjs --target es2020 --skipLibCheck && node --test __tests__/offlineQueue.test.js __tests__/workspaceLogic.test.js",
     "export:web": "expo export --platform web"
   },
   "dependencies": {

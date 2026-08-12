@@ -1,22 +1,38 @@
-# Farm Registry Mobile
+# Field Registry Mobile
 
-React Native / Expo portfolio-demo для полевых операторов Registrul Fermierului. Приложение показывает mobile-first интерфейс, поиск по parcel, статус синхронизации и offline-friendly сценарий. Все данные synthetic.
+Demo mobil React Native / Expo pentru un portofoliu de achiziții publice. Interfața folosește exclusiv date sintetice și nu se conectează la API-uri, utilizatori sau servicii reale.
 
-## Запуск
+## Rulare
 
 ```bash
-npm install
+npm ci
 npx expo start
 ```
 
-Откройте проект в Expo Go или Android/iOS simulator. `npm run typecheck` проверяет TypeScript.
+Deschide aplicația în Expo Go sau într-un simulator Android/iOS.
 
-## Что доказывает для закупки
+## Verificare
 
-- React Native и TypeScript;
-- mobile-first UI для операторов в поле;
-- offline/sync state как UI contract;
-- единый дизайн с web-проектом;
-- GitHub Actions CI.
+```bash
+npm run typecheck
+npm test
+```
 
-Это демонстрация интерфейса, а не подключение к реальному государственному API.
+CI rulează aceleași verificări după `npm ci`.
+
+## Ce funcționează în demo
+
+- Căutarea filtrează parcelele după ID și fermier.
+- Selectarea unei parcele actualizează fișa și centroidul calculat din poligonul synthetic al parcelei.
+- „Salvează validarea locală” schimbă statusul în `Validată` și îl persistă local prin AsyncStorage.
+- Comutatorul online/offline este explicit o conexiune simulată pentru demonstrație; nu pretinde sincronizare cu un server. Statusurile locale rămân disponibile pe dispozitiv când nu există conexiune.
+
+## Limitări
+
+Nu există backend, autentificare, hartă, GPS, sincronizare reală, validare cadastrală, utilizatori sau experiență de review. Persistența este locală și specifică dispozitivului. Centroidul folosește formula planarǎ pentru poligoane mici, synthetic; nu este o operație geodezică pentru producție.
+
+## Notă post-submission
+
+Această versiune aplică hardening post-submission cu scop restrâns: acțiuni UI funcționale, stare locală persistentă și centroid derivat din geometrie, păstrând datele synthetic și tag-ul de submission.
+
+Submission tag: `submission-21663739-2026-08-12`

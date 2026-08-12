@@ -1,43 +1,38 @@
 # Farm Registry Mobile
 
-Aplicație Expo / React Native **Romanian-first**, mobile-first, pentru demonstrarea unui registru agricol sintetic care rămâne utilizabil offline. Interfața publică este un flux local, bazat pe fixtures fictive — nu un registru de producție.
+Aplicație **mobile-first, Romanian-first** pentru operatorul care lucrează pe teren și are nevoie de un flux offline transparent: poate consulta parcele, înregistra activitatea și vedea ce rămâne în coada locală înainte de un flush controlat de utilizator.
 
-[Deschide demo-ul Expo Web →](https://farm-registry-mobile.vercel.app)
+[Deschide aplicația live →](https://farm-registry-mobile.vercel.app)
 
-## Ce include
+## Pentru operatori: fluxurile disponibile
 
-- Dashboard de tură cu sarcini, termene, acțiuni din coadă și sarcini finalizate.
-- Căutare și filtre după fermă, parcelă, cultură și starea de lucru.
-- Fișă de parcelă cu cultură, suprafață, status, operator, sarcini și observații.
-- Creare și actualizare locală de sarcini, plus observații validate înainte de salvare.
-- Jurnal de audit local pentru acțiunile efectuate în aplicație.
+UI-ul actual acoperă următoarele roluri și fluxuri locale:
 
-Datasetul demonstrativ conține **6 ferme fictive** și **12 parcele fictive**. Numele, identificatorii `FR-SYN-*`, localitățile, suprafețele, sarcinile, observațiile și metadatele foto sunt sintetice.
+- **Operator de teren:** pornește din dashboardul de tură, unde vede sarcinile, termenele, acțiunile din coadă și sarcinile finalizate.
+- **Operator de teren:** caută și filtrează parcele după fermă, parcelă, cultură și starea de lucru, apoi deschide detaliul unei parcele.
+- **Operator de teren:** consultă cultura, suprafața, statusul, operatorul, sarcinile și observațiile din fișa parcelei; creează sau actualizează sarcini local.
+- **Operator de teren:** validează și salvează observații, apoi poate verifica jurnalul local de audit al acțiunilor efectuate.
+- **Operator de teren:** controlează explicit comutarea Offline / Online și flush-ul local al cozii, inclusiv retry-ul după un eșec simulat.
 
-## Offline și modelul local
+## Model offline
 
-`AsyncStorage` păstrează local sarcinile, observațiile, auditul și outbox-ul între reîncărcări. Observațiile și schimbările de sarcini au `client_action_id`; coada previne duplicatele și modelează stările `pending`, `synced` și `failed`, inclusiv retry și eșec simulat.
+Aplicația pornește din fixtures locale. `AsyncStorage` păstrează local sarcinile, observațiile, auditul și outbox-ul între reîncărcări. Pentru modificările de sarcini și observații, `client_action_id` oferă idempotency în coada locală, astfel încât aceeași acțiune să nu fie adăugată de două ori.
 
-Butonul Offline / Online controlează rularea flush-ului demonstrativ. Important: acest „sync” rulează numai adaptorul local și actualizează starea/auditul local; nu transmite date către un server și nu oferă sincronizare de producție sau backend persistent.
+Fiecare element din outbox are starea `pending`, `synced` sau `failed`. Fluxul poate simula retry și failure. Comutatorul Offline / Online permite rularea unui **flush numai local**: actualizează starea și auditul din aplicație, fără să trimită date la un server.
 
-## Limita API-ului și a datelor
+## API și limite de conectare
 
-Există o graniță HTTP opțională în `src/apiClient.ts`, configurabilă prin `EXPO_PUBLIC_FARM_REGISTRY_API_URL`. UI-ul vizibil nu o folosește: rămâne pe fixtures sintetice și fluxul offline local, chiar dacă este configurat un endpoint.
+Există un `src/apiClient.ts` opțional și variabila `EXPO_PUBLIC_FARM_REGISTRY_API_URL`, însă acestea **nu sunt conectate la UI-ul vizibil**. Aplicația rămâne pe fixtures și pe fluxul offline local chiar dacă endpointul este configurat.
 
-Aplicația Mobile **nu este conectată la API-ul Render**. [Farm Registry API – documentație](https://farm-registry-api-demo.onrender.com/docs) este un backend separat, nu sursa de date a demo-ului mobil.
-
-Nu există integrări reale, sincronizare pe server sau afirmație de pregătire pentru producție. Folosește numai date sintetice/publice în acest demo; o aplicație reală ar necesita separat autentificare, autorizare, protecția datelor, persistență și audit de securitate.
+Farm Registry Mobile nu este conectată la API-ul Render; [documentația Farm Registry API](https://farm-registry-api-demo.onrender.com/docs) descrie un backend separat, nu o sursă de date pentru această aplicație.
 
 ## Stack
 
-- Expo 52, React 18 și React Native 0.76
+- Expo 52
+- React 18 și React Native 0.76
 - TypeScript 5.6
-- React Native Web / React DOM pentru preview-ul web
-- `@react-native-async-storage/async-storage` pentru starea locală
-
-## Dovezi / Evidence
-
-[Arhitectură și matrice de dovezi verificabile →](docs/evidence-matrix.md)
+- React Native Web și React DOM pentru preview/export web
+- `@react-native-async-storage/async-storage` pentru stocarea locală
 
 ## Rulare locală și export
 
@@ -46,13 +41,26 @@ npm ci
 npm start
 ```
 
+Scripturile disponibile sunt:
+
 ```bash
-npm run android    # țintă Android prin Expo
-npm run ios        # țintă iOS prin Expo
+npm run android    # Expo pe Android
+npm run ios        # Expo pe iOS
 npm run typecheck  # verificare TypeScript
 npm test           # teste Node pentru logica locală
 npm run export:web # export static Expo Web
 ```
+
+## Dovezi
+
+- [Arhitectură](docs/architecture.md)
+- [Matrice de dovezi](docs/evidence-matrix.md)
+
+## Date și limite
+
+Acest produs folosește exclusiv date sintetice: 6 ferme fictive și 12 parcele fictive. Numele, identificatorii `FR-SYN-*`, localitățile, suprafețele, sarcinile, observațiile și metadatele foto sunt fictive.
+
+Nu sunt incluse date private reale, coordonate GPS reale, date cadastrale reale, date despre persoane sau secrete. Nu există sincronizare pe server, backend persistent, integrări reale sau afirmații de pregătire pentru producție. Un sistem de producție ar necesita separat autentificare, autorizare, protecția datelor, persistență și audit de securitate.
 
 ## Proiecte asociate
 

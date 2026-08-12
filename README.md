@@ -22,6 +22,7 @@ CI rulează aceleași verificări după `npm ci`.
 
 ## Ce funcționează în demo
 
+- Toate numele și ID-urile afișate sunt marcate explicit ca date synthetic de demo (`SYNTH-*`); nu identifică persoane sau exploatații reale.
 - Căutarea filtrează parcelele după ID și fermier.
 - Selectarea unei parcele actualizează fișa și centroidul calculat din poligonul synthetic al parcelei.
 - „Salvează validarea locală” schimbă statusul în `Validată` și îl persistă local prin AsyncStorage.

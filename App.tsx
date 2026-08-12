@@ -7,9 +7,9 @@ import { TaskState, taskReducer } from './src/taskState';
 
 const TASKS_KEY = 'field-registry.task-status.v1';
 const parcels = [
-  { id: 'MD-CT-00142', name: 'AgroNord SRL', area: '42.8 ha', status: 'Validată' as const, crop: 'Grâu', geometry: [[28.83, 47.01], [28.85, 47.01], [28.85, 47.03], [28.83, 47.03]] as const },
-  { id: 'MD-CT-00143', name: 'Ion Balan', area: '18.3 ha', status: 'În verificare' as const, crop: 'Porumb', geometry: [[28.80, 47.04], [28.82, 47.04], [28.82, 47.05], [28.80, 47.05]] as const },
-  { id: 'MD-CT-00144', name: 'Eco Valea Mare', area: '64.1 ha', status: 'Validată' as const, crop: 'Floarea-soarelui', geometry: [[28.86, 46.99], [28.88, 46.99], [28.88, 47.01], [28.86, 47.01]] as const },
+  { id: 'SYNTH-CT-00142', name: 'Fermă Demo Alpha', area: '42.8 ha', status: 'Validată' as const, crop: 'Grâu', geometry: [[28.83, 47.01], [28.85, 47.01], [28.85, 47.03], [28.83, 47.03]] as const },
+  { id: 'SYNTH-CT-00143', name: 'Operator Test Beta', area: '18.3 ha', status: 'În verificare' as const, crop: 'Porumb', geometry: [[28.80, 47.04], [28.82, 47.04], [28.82, 47.05], [28.80, 47.05]] as const },
+  { id: 'SYNTH-CT-00144', name: 'Parcelă Exemplu Gamma', area: '64.1 ha', status: 'Validată' as const, crop: 'Floarea-soarelui', geometry: [[28.86, 46.99], [28.88, 46.99], [28.88, 47.01], [28.86, 47.01]] as const },
 ];
 
 const initialStatuses: TaskState = Object.fromEntries(parcels.map((parcel) => [parcel.id, parcel.status]));

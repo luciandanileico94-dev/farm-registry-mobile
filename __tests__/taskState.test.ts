@@ -4,8 +4,8 @@ import { taskReducer } from '../src/taskState';
 
 describe('taskReducer', () => {
   it('validates an existing local task and ignores unknown ids', () => {
-    const state = { 'MD-CT-00142': 'În verificare' as const };
-    assert.deepEqual(taskReducer(state, { type: 'validate', id: 'MD-CT-00142' }), { 'MD-CT-00142': 'Validată' });
+    const state = { 'SYNTH-CT-00142': 'În verificare' as const };
+    assert.deepEqual(taskReducer(state, { type: 'validate', id: 'SYNTH-CT-00142' }), { 'SYNTH-CT-00142': 'Validată' });
     assert.deepEqual(taskReducer(state, { type: 'validate', id: 'missing' }), state);
   });
 
